@@ -50,23 +50,23 @@ app.get('/weather',(req,res)=>{
             error:'You must provide an address!'
         })
     }
-var address=req.query.address
-geocode(address,(error,{latitude,longitude,location}={})=>{
-    if (error){
-        return res.send({error})
-    }
-    forecast(latitude,longitude,(error,forecastdata)=>{
+    var address=req.query.address
+
+    geocode(address,(error,{latitude,longitude,location}={})=>{
         if (error){
             return res.send({error})
         }
-        
-        res.send({
-            forecast:forecastdata,
-            location,
-            address:address
+        forecast(latitude,longitude,(error,forecastdata)=>{
+            if (error){
+                return res.send({error})
+            }
+            res.send({
+                forecast:forecastdata,
+                location,
+                address:address
+            })
         })
     })
-})
 })
 
 app.get('/help/*',(req,res)=>{
